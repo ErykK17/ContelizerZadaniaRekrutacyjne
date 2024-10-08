@@ -23,10 +23,11 @@ def get_birthday(pesel):
 def validate_pesel(pesel):
     """Sprawdza długość PESEL oraz poprawność numeru kontrolnego."""
     weights = {1: 1, 2: 3, 3: 7, 4: 9, 5: 1, 6: 3, 7: 7, 8: 9, 9: 1, 10: 3, 11: 1}
-    length_is_valid = len(pesel) == 11
+    length_is_valid = len(pesel) == 11 # jeśli pesel ma 11 cyfr, zmienna przyjmuje wartość True
     
     total_sum = sum(int(digit) * weights[index] for index, digit in enumerate(pesel, start=1))
-    control_number_is_valid = (total_sum % 10) == 0
+    control_number_is_valid = (total_sum % 10) == 0 #Jeśli ostatnia cyfra sumy iloczynow cyfr PESEL z ich przypisanymi wagami
+    #wynosi zero, liczba kontrolna jest prawidłowa
 
     birth_month_is_valid = int(pesel[2]) % 2 ==0 or int(pesel[2]) % 2 != 0 and int(pesel[3]) <= 2
 
@@ -34,6 +35,7 @@ def validate_pesel(pesel):
 
 
 class PeselValidation(FormView):
+    """Widok z formularzem do podania PESELU do sprawdzenia."""
     template_name = 'validate_pesel.html'
     form_class = PeselForm
     success_url = reverse_lazy('result')
@@ -45,6 +47,7 @@ class PeselValidation(FormView):
 
 
 class ResultView(TemplateView):
+    """Widok wyświetlający wynik walidacji PESEL oraz pobrane infromacje o osobie."""
     template_name = 'result.html'
 
     def get_context_data(self, **kwargs):
