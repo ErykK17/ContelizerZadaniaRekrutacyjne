@@ -9,12 +9,10 @@
     <h1>Prześlij Plik</h1>
     
     <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}  <!-- Dodaj token CSRF dla bezpieczeństwa -->
+        {% csrf_token %}
         <label for="file">Wybierz plik:</label>
         <input type="file" name="file" id="file" required>
         <button type="submit">Prześlij</button>
     </form>
-
-    <a href="{% url 'home' %}">Powrót do strony głównej</a>  <!-- Link do strony głównej -->
 </body>
 </html>
