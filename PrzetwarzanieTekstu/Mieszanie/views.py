@@ -36,7 +36,8 @@ def scramble_text(text):
     return scrambled_text
 
 
-class  UploadFileView(CreateView): #Widok uploadowania pliku tekstowego
+class  UploadFileView(CreateView):
+    """Widok uploadowania pliku tekstowego."""
     model = File
     form_class = FileForm
     template_name = 'upload.html'
@@ -50,7 +51,8 @@ class  UploadFileView(CreateView): #Widok uploadowania pliku tekstowego
         return redirect('result')
     
 
-class ResultView(TemplateView): #Widok wyświetlający rezultat
+class ResultView(TemplateView):
+    """Widok wyświetlający rezultat.""" 
     template_name = 'result.html'
 
     def get_context_data(self, **kwargs):

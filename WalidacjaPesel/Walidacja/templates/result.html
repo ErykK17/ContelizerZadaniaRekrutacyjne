@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+</head>
+<body>
+    <h1>Wynik</h1>
+    <pre>Pesel: {{ pesel }}</pre>
+    <pre>Data urodzenia: {{ birthday }}</pre>
+    <pre>Płeć: {{ gender }}</pre>
+    <pre>{{ length }}</pre>
+    <pre>{{ control_number }}</pre>
+
+    <a href="{% url 'home' %}">Powrót do strony głównej</a>
+</body>
+</html>
