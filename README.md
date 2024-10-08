@@ -1,0 +1,2 @@
+# ContelizerZadaniaRekrutacyjne
+Zadania rekrutacyjne contelier
