@@ -11,9 +11,10 @@ def get_gender(pesel):
 
 def get_birthday(pesel):
     """Zwraca datę urodzenia w formacie YYYY-MM-DD na podstawie numeru PESEL."""
-    month = pesel[3] if int(pesel[2]) % 2 == 0 else '1' + pesel[3]
+    month = pesel[3] if int(pesel[2]) % 2 == 0 else '1' + pesel[3] #jeśli 3 cyfru peselu jest nieparzysta 
+    #to oznacza ze miesiac urodzenia jest wyzszy bądź równy 10
     year_prefix = {0: '19', 80: '18', 20: '20', 40: '21', 60: '22'}
-    year_code = int(pesel[2:4]) - int(month)
+    year_code = int(pesel[2:4]) - int(month) #Sprawdzane jest ile dodano do miesiąca, żeby określić przediał lat urodzenia 
     year = year_prefix[year_code] + pesel[0:2]
     day = pesel[4:6]
     return f'{year}-{int(month):02d}-{day}'
@@ -27,7 +28,9 @@ def validate_pesel(pesel):
     total_sum = sum(int(digit) * weights[index] for index, digit in enumerate(pesel, start=1))
     control_number_is_valid = (total_sum % 10) == 0
 
-    return length_is_valid, control_number_is_valid
+    birth_month_is_valid = int(pesel[2]) % 2 ==0 or int(pesel[2]) % 2 != 0 and int(pesel[3]) <= 2
+
+    return length_is_valid, control_number_is_valid, birth_month_is_valid
 
 
 class PeselValidation(FormView):
@@ -49,10 +52,11 @@ class ResultView(TemplateView):
         pesel = self.request.session.get('pesel')
         
         if pesel:
-            length_is_valid, control_number_is_valid = validate_pesel(pesel)
+            length_is_valid, control_number_is_valid, birth_month_is_valid = validate_pesel(pesel)
             context['pesel'] = pesel
             context['length'] = "Prawidłowa długość" if length_is_valid else "Nieprawidłowa długość"
             context['control_number'] = "Numer kontrolny prawidłowy" if control_number_is_valid else "Nieprawidłowy numer kontrolny"
+            context['birth_month_valid'] = "Miesiąc urodzenia poprawny" if birth_month_is_valid else "Nieprawidłowy miesiąc urodzenia"
             context['birthday'] = get_birthday(pesel)
             context['gender'] = get_gender(pesel)
         else:
